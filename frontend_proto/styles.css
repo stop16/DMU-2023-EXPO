@@ -1,0 +1,103 @@
+/* Select the menu item with the text "Main page" and change its color to green */
+#highlight-color {
+    color: #B57EDC; /* Replace with your desired green color code */
+}
+
+/* Styles for larger screens */
+.menu-bar {
+    background-color: #f0f0ff;
+    border-radius: 10px;
+    padding: 10px; /* Adjusted padding */
+    text-align: center;
+    justify-content: space-between;
+    align-items: center;
+    color: #333;
+}
+
+/* Styles for the title container */
+.menu-bar h1 {
+    display: flex; /* Display title and logo side by side */
+    align-items: center; /* Vertically center title and logo */
+    justify-content: center; /* Horizontally center title and logo */
+}
+
+/* Styles for the title text */
+.menu-bar h1 span {
+    margin-right: 10px; /* Add spacing between title and logo */
+}
+
+/* Add styles for the logo */
+#logo {
+    max-width: 100px; /* Set a maximum width for the logo */
+    margin-left: 10px; /* Add a small margin to separate the logo from the title */
+    vertical-align: middle;
+}
+
+.widget-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.widget {
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+}
+
+/* Add styles for the header */
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Add styles for the navigation menu */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* Styles for the Drone widget */
+.drone-location {
+    text-align: center;
+    margin-bottom: 20px; /* Add margin to separate location from battery */
+}
+
+.drone-location img {
+    max-width: 100%;
+    height: auto;
+}
+
+.slam-data {
+    text-align: center;
+    margin-bottom: 20px; /* Add margin to separate location from battery */
+}
+
+.slam-data img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* Styles for smaller screens */
+@media screen and (max-width: 1024px) {
+    .widget {
+        width: calc(100% - 20px);
+    }
+}

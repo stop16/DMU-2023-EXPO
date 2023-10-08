@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Logistics System - Main Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section class="menu-bar">
+        <header>
+            <h1>
+                <span>AirLogiX Control Panel</span>
+                <img src="logo.jpg" alt="AirLogiX Logo" id="logo">
+            </h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="main.html" id="highlight-color">Main Page</a></li>
+                <li><a href="drone.html">Drone</a></li>
+                <li><a href="agv.html">AGV</a></li>
+                <li><a href="station.html">Station</a></li>
+            </ul>
+        </nav>
+        
+    </section>
+
+    <div class="widget-container">
+        <section class="widget">
+            <h2>Drone Information</h2>
+            <div class="drone-location">
+                <img src="location_map.png" alt="Drone Location Map">
+            </div>
+            <div class="drone-battery">
+                <p>Battery Level: <span id="droneBattery">Loading...</span>%</p>
+            </div>
+            <p>Cargo Status: <span id="droneCargo">Loading...</span></p>
+        </section>
+
+        <section class="widget">
+            <h2>AGV Information</h2>
+            <div class="slam-data">
+                <img src="slam-map.png" alt="Slam Data">
+            </div>
+            <p>Battery Level: <span id="agvBattery">Loading...</span></p>
+            <p>Estimated Mileage: <span id="agvMileage">Loading...</span></p>
+            <p>Estimated Time to Destination: <span id="agvETA">Loading...</span></p>
+        </section>
+
+        <section class="widget">
+            <h2>Station Information</h2>
+            <p>Alignment Rod Status: <span id="stationAlignment">Loading...</span></p>
+            <p>Raildoor Status: <span id="stationRaildoor">Loading...</span></p>
+            <p>Power Level: <span id="stationPower">Loading...</span></p>
+            <p>Server Health: <span id="stationHealth">Loading...</span></p>
+        </section>
+    </div>
+
+</body>
+</html>
