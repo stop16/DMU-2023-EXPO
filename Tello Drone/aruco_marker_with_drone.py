@@ -49,11 +49,15 @@ def process_frame(frame):
     cv2.circle(gray, (arr_avg(cx_array), arr_avg(cy_array)), 10, (136, 12, 255))
     return gray
 
-def move_to_center(threshold=30):
+x_condition = False
+y_condition = False
+def move_to_center(threshold=5):
     timer = threading.Timer(5,move_to_center)
     timer.start()
     global cx_array
     global cy_array
+    global x_condition
+    global y_condition
     if cx_array[0] != 0 and cx_array[1] != 0:
         center_x = arr_avg(cx_array)
         center_y = arr_avg(cy_array)
@@ -61,26 +65,33 @@ def move_to_center(threshold=30):
         if center_x < 180-threshold:
             text = text + 'move left'
             drone.go_xyz_speed(0,20,0,10)
+            x_condition = False
         elif center_x > 180+threshold:
             text = text + 'move right'
             drone.go_xyz_speed(0,-20,0,10)
+            x_condition = False
         else:
             text = text + 'good x condition'
+            x_condition = True
         
         text = text + ' '
 
         if center_y < 120-threshold:
-            text = text + 'move up'
-            drone.go_xyz_speed(0,0,20,10)
+            text = text + 'move forward'
+            drone.go_xyz_speed(20,0,0,10)
+            y_condition = False
         elif center_y > 120+threshold:
-            text = text + 'move down'
-            drone.go_xyz_speed(0,0,-20,10)
+            text = text + 'move back'
+            drone.go_xyz_speed(-20,0,0,10)
+            y_condition = False
         else:
             text = text + 'good y condition'
+            y_condition = True
         print(text)
 
 drone = tello.Tello()
 drone.connect()
+drone.land()
 print(drone.get_battery())
 drone.streamon()
 time.sleep(3)
@@ -96,5 +107,10 @@ if __name__ == "__main__":
     while True:
         img = drone.get_frame_read().frame
         img = cv2.resize(img, (360,240))
+        img = cv2.flip(img, 0)
         cv2.imshow("image",process_frame(img))
         cv2.waitKey(1)
+        if x_condition and y_condition:
+            drone.land()
+            drone.end()
+            break
