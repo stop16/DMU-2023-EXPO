@@ -3,6 +3,9 @@ import cv2
 import time
 import threading
 
+drone = tello.Tello()
+drone.connect()
+
 def add_num(arr, num, id):
     if id == 0:
         arr[0] = num
@@ -51,13 +54,18 @@ def process_frame(frame):
 
 x_condition = False
 y_condition = False
-def move_to_center(threshold=5):
+end_flag = False
+precision_timer = 0
+def move_to_center(threshold=30):
     timer = threading.Timer(5,move_to_center)
     timer.start()
     global cx_array
     global cy_array
-    global x_condition
-    global y_condition
+    x_condition = 0
+    y_condition = 0
+    global end_flag
+    global precision_timer
+    camera_const = 10
     if cx_array[0] != 0 and cx_array[1] != 0:
         center_x = arr_avg(cx_array)
         center_y = arr_avg(cy_array)
@@ -76,41 +84,47 @@ def move_to_center(threshold=5):
         
         text = text + ' '
 
-        if center_y < 120-threshold:
+        if center_y < 120-(threshold)-camera_const:
             text = text + 'move forward'
             drone.go_xyz_speed(20,0,0,10)
             y_condition = False
-        elif center_y > 120+threshold:
+        elif center_y > 120+(threshold)-camera_const:
             text = text + 'move back'
             drone.go_xyz_speed(-20,0,0,10)
             y_condition = False
         else:
             text = text + 'good y condition'
             y_condition = True
-        print(text)
 
-drone = tello.Tello()
-drone.connect()
-drone.land()
+        if x_condition and y_condition:
+            x_condition = False
+            y_condition = False
+            drone.move_down(30)
+            precision_timer = precision_timer + 1
+        if precision_timer == 1:
+            x_condition = False
+            y_condition = False
+            end_flag = True
+        
+        print(text)
+        
 print(drone.get_battery())
 drone.streamon()
-time.sleep(3)
+time.sleep(1)
 drone.takeoff()
-time.sleep(3)
-drone.move_up(80)
-time.sleep(3)
-
-
-
-if __name__ == "__main__":
-    move_to_center()
-    while True:
-        img = drone.get_frame_read().frame
-        img = cv2.resize(img, (360,240))
-        img = cv2.flip(img, 0)
-        cv2.imshow("image",process_frame(img))
-        cv2.waitKey(1)
-        if x_condition and y_condition:
-            drone.land()
-            drone.end()
-            break
+time.sleep(1)
+drone.move_up(50)
+time.sleep(1)
+drone.move_forward(60)
+time.sleep(1)
+move_to_center()
+while True:
+    img = drone.get_frame_read().frame
+    img = cv2.resize(img, (360,240))
+    img = cv2.flip(img, 0)
+    cv2.imshow("image",process_frame(img))
+    cv2.waitKey(1)
+    if end_flag == True:
+        drone.land()
+        drone.end()
+        break

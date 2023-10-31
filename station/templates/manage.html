@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>
+        AirLogiX 관리페이지
+    </title>
+</head>
+<body>
+    <form method="post" action="">
+        <fieldset>
+            <legend>배터리 레벨(숫자만 입력)</legend>
+            <input type="text" name="value">
+            <div>
+            <button type="submit" name="action" value="battery_level">적용</button>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>화물 상태</legend>
+            <div>
+              <input type="radio" id="cargostatus1" name="type" value="1" />
+              <label for="cargostatus1">상/하차 진행중</label>
+        
+              <input type="radio" id="cargostatus2" name="type" value="2" />
+              <label for="cargostatus2">탑재됨</label>
+        
+              <input type="radio" id="cargostatus3" name="type" value="3" />
+              <label for="cargostatus3">탑재되지 않음</label>
+            </div>
+            <div>
+              <button type="submit">적용</button>
+            </div>
+          </fieldset>
+            
+    </form>
+</body>
+</html>

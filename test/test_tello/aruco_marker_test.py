@@ -9,13 +9,13 @@ while True:
     except:
         while not ret:
             ret, frame = cap.read()
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     
     
     aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_250)
     parameters = cv2.aruco.DetectorParameters_create()
     corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
-    gray = frame
+    #gray = frame
     if len(corners) > 0:
         ids = ids.flatten()
 

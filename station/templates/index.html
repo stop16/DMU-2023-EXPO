@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Automated Logistics System - Main Page</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <section class="menu-bar">
         <header>
             <h1>
                 <span>AirLogiX Control Panel</span>
-                <img src="logo.jpg" alt="AirLogiX Logo" id="logo">
+                <img src="static/img/logo.jpg" alt="AirLogiX Logo" id="logo">
             </h1>
         </header>
         <nav>
@@ -31,10 +31,11 @@
             <div class="drone-location">
                 <img src="location_map.png" alt="Drone Location Map">
             </div>
+            <p>상태: 이륙 준비 완료</p>
             <div class="drone-battery">
-                <p>Battery Level: <span id="droneBattery">Loading...</span>%</p>
+                <p>배터리 상태: <span id="droneBattery">100%</span>%</p>
             </div>
-            <p>Cargo Status: <span id="droneCargo">Loading...</span></p>
+            <p>화물 상태: <span id="droneCargo">탑재 대기중</span></p>
         </section>
 
         <section class="widget">
@@ -42,19 +43,29 @@
             <div class="slam-data">
                 <img src="slam-map.png" alt="Slam Data">
             </div>
-            <p>Battery Level: <span id="agvBattery">Loading...</span></p>
-            <p>Estimated Mileage: <span id="agvMileage">Loading...</span></p>
-            <p>Estimated Time to Destination: <span id="agvETA">Loading...</span></p>
+            <p>상태: 대기중</p>
+            <p>배터리 상태: 100%</p>
+            <p>예상 이동 거리: 약 800m</p>
+            <p>도착 예정 시간: 이동중이 아님</p>
         </section>
 
         <section class="widget">
             <h2>Station Information</h2>
-            <p>Alignment Rod Status: <span id="stationAlignment">Loading...</span></p>
-            <p>Raildoor Status: <span id="stationRaildoor">Loading...</span></p>
-            <p>Power Level: <span id="stationPower">Loading...</span></p>
-            <p>Server Health: <span id="stationHealth">Loading...</span></p>
+            <p>상태: 대기중</p>
+            <p>arUco</p>
         </section>
     </div>
+    <script>
+        function update(){
+            $.get("/update", function(data){
+                $("#output").html(data)
+            });
+        }
+        update()
+        var intervalId = setInterval(function() {
+            update()
+        }, 10000);
 
+    </script>
 </body>
 </html>
